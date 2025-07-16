@@ -13,11 +13,7 @@ type NotionNodeType = {
   accessToken: string;
   databaseId: string;
   workspaceName: string;
-  content: {
-    name: string;
-    kind: string;
-    type: string;
-  };
+  content: string;
 };
 
 type SlackNodeType = {
@@ -33,11 +29,7 @@ type SlackNodeType = {
 
 type WorkflowTemplateType = {
   discord?: string;
-  notion?: {
-    name: string;
-    kind: string;
-    type: string;
-  };
+  notion?: string;
   slack?: string;
 };
 
@@ -72,11 +64,7 @@ export const initialValues: ConnectionProviderProps = {
     accessToken: "",
     databaseId: "",
     workspaceName: "",
-    content: {
-      name: "",
-      kind: "",
-      type: "",
-    },
+    content: "",
   },
   setNotionNode: () => undefined,
   slackNode: {
@@ -90,7 +78,11 @@ export const initialValues: ConnectionProviderProps = {
     content: "",
   },
   setSlackNode: () => undefined,
-  workflowTemplate: {},
+  workflowTemplate: {
+    discord: "",
+    notion: "",
+    slack: "",
+  },
   setWorkflowTemplate: () => undefined,
   isLoading: false,
   setIsLoading: () => undefined,

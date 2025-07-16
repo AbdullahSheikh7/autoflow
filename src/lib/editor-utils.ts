@@ -7,7 +7,11 @@ import {
   getNotionConnection,
   getNotionDatabase,
 } from "@/app/(main)/(pages)/connections/_actions/notion-connetion";
-import { getSlackConnection } from "@/app/(main)/(pages)/connections/_actions/slack-connetion";
+import {
+  getSlackConnection,
+  listBotChannels,
+} from "@/app/(main)/(pages)/connections/_actions/slack-connetion";
+import { Option } from "@/store";
 
 export const onDragStart = (
   event: DragEvent<HTMLDivElement>,
@@ -39,6 +43,16 @@ const onDiscordContent = (
   }));
 };
 
+const onNotionContent = (
+  nodeConnection: ConnectionProviderProps,
+  event: React.ChangeEvent<HTMLInputElement>
+) => {
+  nodeConnection.setNotionNode((prev: any) => ({
+    ...prev,
+    content: event.target.value,
+  }));
+};
+
 export const onContentChange = (
   nodeConnection: ConnectionProviderProps,
   nodeType: string,
@@ -48,6 +62,8 @@ export const onContentChange = (
     onSlackContent(nodeConnection, event);
   } else if (nodeType === "Discord") {
     onDiscordContent(nodeConnection, event);
+  } else if (nodeType === "Notion") {
+    onNotionContent(nodeConnection, event);
   }
 };
 
@@ -107,11 +123,7 @@ export const onConnections = async (
         accessToken: connection.accessToken,
         databaseId: connection.databaseId,
         workspaceName: connection.workspaceName,
-        content: {
-          name: googleFile.name,
-          kind: googleFile.kind,
-          type: googleFile.mimeType,
-        },
+        content: "",
       });
 
       if (nodeConnection.notionNode.databaseId !== "") {
@@ -138,4 +150,11 @@ export const onConnections = async (
       });
     }
   }
+};
+
+export const fetchBotSlackChannels = async (
+  token: string,
+  setSlackChannels: (slackChannels: Option[]) => void
+) => {
+  await listBotChannels(token)?.then((channels) => setSlackChannels(channels));
 };

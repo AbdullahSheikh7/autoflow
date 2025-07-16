@@ -10,19 +10,20 @@ import {
 import { useConnection } from "@/providers/connection-provider";
 
 type Props = {
-  children: React.ReactNode;
+  id: string;
   edges: Editor["edges"];
   nodes: Editor["elements"];
+  children: React.ReactNode;
 };
 
-const FlowInstance = ({ children, edges, nodes }: Props) => {
-  const path = usePathname();
+const FlowInstance = ({ id, children, edges, nodes }: Props) => {
   const [isFlow, setIsFlow] = useState([]);
   const { nodeConnection } = useConnection();
 
   const onFlowAutomation = useCallback(async () => {
+    console.log(edges, nodes);
     const flow = await onCreateNodesEdges(
-      path.split("/").pop()!,
+      id,
       JSON.stringify(nodes),
       JSON.stringify(edges),
       JSON.stringify(isFlow)
@@ -32,13 +33,14 @@ const FlowInstance = ({ children, edges, nodes }: Props) => {
   }, [nodeConnection]);
 
   const onPublishWorkflow = useCallback(async () => {
-    const response = await onFlowPublish(path.split("/").pop()!, true);
+    const response = await onFlowPublish(id, true);
     if (response) toast.message(response);
   }, []);
 
   const onAutomateFlow = async () => {
     const flows: any = [];
     const connectedEdges = edges.map((edge) => edge.target);
+    console.log(edges, nodes);
     connectedEdges.map((target) => {
       nodes.forEach((node) => {
         if (node.id === target) {

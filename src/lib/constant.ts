@@ -30,7 +30,7 @@ export const CONNECTIONS: Connection[] = [
     description: "Connect your discord to send notifications and messages",
     image: "/discord.png",
     connectionKey: "discordNode",
-    accessTokenKey: "webhookUrl",
+    accessTokenKey: "webhookURL",
   },
   {
     title: "Notion",

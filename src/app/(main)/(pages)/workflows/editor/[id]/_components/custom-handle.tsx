@@ -12,7 +12,7 @@ type Props = HandleProps & { style?: CSSProperties };
 const CustomHandle = (props: Props) => {
   const { state } = useEditor();
 
-  // WIP:
+  // WIP: WTF is this?
   // const fullState = useStore(debugSelector);
   // console.log(fullState);
 

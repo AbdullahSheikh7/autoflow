@@ -2,6 +2,7 @@
 
 import { db } from "@/lib/db";
 import { currentUser } from "@clerk/nextjs/server";
+import axios from "axios";
 
 export const onDiscordConnect = async (
   channel_id: string,
@@ -99,4 +100,15 @@ export const getDiscordConnectionUrl = async () => {
 
     return webhook;
   }
+};
+
+export const postContentToWebhook = async (content: string, url: string) => {
+  if (content !== "") {
+    const posted = await axios.post(url, { content });
+    if (posted) {
+      return { message: "success" };
+    }
+    return { message: "failed request" };
+  }
+  return { message: "string empty" };
 };

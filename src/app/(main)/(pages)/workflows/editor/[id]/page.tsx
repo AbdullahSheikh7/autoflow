@@ -10,7 +10,7 @@ const Editor = async ({ params }: Props) => {
     <div className="h-full">
       <EditorProvider>
         <ConnectionProvider>
-          <EditorCanvas />
+          <EditorCanvas id={id} />
         </ConnectionProvider>
       </EditorProvider>
     </div>

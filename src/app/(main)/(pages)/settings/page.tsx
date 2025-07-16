@@ -3,24 +3,22 @@
 import ProfileForm from "@/components/forms/profile-form";
 import ProfilePicture from "./_components/profile-picture";
 import removeImage from "./_actions/remove-image";
-import useUser from "@/actions/global/user";
 import uploadImage from "./_actions/upload-image";
 import { useEffect, useState } from "react";
 import { User } from "@/generated/prisma";
 import { Loader2 } from "lucide-react";
 import updateUserInfo from "./_actions/update-info";
-import { useAuth } from "@clerk/nextjs";
+import userFromDB from "./_actions/user";
 
 const Settings = () => {
-  // const user = useAuth();
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     (async () => {
-      const u = await useUser();
-      setUser(u);
+      const dbUser = await userFromDB();
+      setUser(dbUser);
       setIsLoading(false);
-      setImageUrl(u?.profileImage || "");
+      setImageUrl(dbUser?.profileImage!);
     })();
   }, []);
 

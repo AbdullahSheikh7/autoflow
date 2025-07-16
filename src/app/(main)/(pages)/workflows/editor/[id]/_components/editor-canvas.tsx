@@ -1,7 +1,7 @@
 "use client";
 
 import { EditorCanvasTypes, EditorNodeType } from "@/lib/types";
-import { useEditor } from "@/providers/editor-provider";
+import { Editor, useEditor } from "@/providers/editor-provider";
 // WIP: Try removing this
 import "@xyflow/react/dist/style.css";
 import { DragEvent, useCallback, useEffect, useMemo, useState } from "react";
@@ -27,30 +27,29 @@ import {
   applyNodeChanges,
 } from "@xyflow/react";
 import { toast } from "sonner";
-import { usePathname } from "next/navigation";
 import { v4 } from "uuid";
 import { EditorCanvasDefaultCardTypes } from "@/lib/constant";
 import FlowInstance from "./flow-instance";
 import EditorCanvasSidebar from "./editor-canvas-sidebar";
 import { useTheme } from "next-themes";
+import { onGetNodeEdges } from "../../../_actions/workflow-connections";
 
-type Props = {};
+type Props = { id: string };
 
 type ThemeType = "light" | "dark" | "system";
 
 const initialNodes: EditorNodeType[] = [];
 
-const initialEdges: { id: string; source: string; target: string }[] = [];
+const initialEdges: Editor["edges"] = [];
 
-const EditorCanvas = (props: Props) => {
+const EditorCanvas = ({ id }: Props) => {
   const { theme } = useTheme();
   const { state, dispatch } = useEditor();
   const [reactFlowInstance, setReactFlowInstance] =
-    useState<ReactFlowInstance>();
+    useState<ReactFlowInstance<EditorNodeType, Editor["edges"][0]>>();
   const [nodes, setNodes] = useState(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
   const [isWorkflowLoading, setIsWorkflowLoading] = useState<boolean>(false);
-  const path = usePathname();
 
   const onDrop = useCallback(
     (event: DragEvent) => {
@@ -174,6 +173,21 @@ const EditorCanvas = (props: Props) => {
     });
   }, [nodes, edges]);
 
+  const onGetWorkflow = async () => {
+    setIsWorkflowLoading(true);
+    const response = await onGetNodeEdges(id);
+    if (response) {
+      setEdges(JSON.parse(response.edges!));
+      setNodes(JSON.parse(response.nodes!));
+      setIsWorkflowLoading(false);
+    }
+    setIsWorkflowLoading(false);
+  };
+
+  useEffect(() => {
+    onGetWorkflow();
+  }, []);
+
   return (
     <ResizablePanelGroup direction="horizontal">
       <ResizablePanel defaultSize={70}>
@@ -253,7 +267,7 @@ const EditorCanvas = (props: Props) => {
             </svg>
           </div>
         ) : (
-          <FlowInstance edges={edges} nodes={nodes}>
+          <FlowInstance id={id} edges={edges} nodes={nodes}>
             <EditorCanvasSidebar nodes={nodes} />
           </FlowInstance>
         )}

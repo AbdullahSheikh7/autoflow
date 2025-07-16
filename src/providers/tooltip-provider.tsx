@@ -1,21 +1,26 @@
 "use client";
 
 import clsx from "clsx";
-import { AnimatePresence, motion } from "motion/react";
+import {
+  AnimatePresence,
+  motion,
+  TargetAndTransition,
+  useMotionValue,
+  useSpring,
+  useTransform,
+} from "motion/react";
 import React, { Dispatch, createContext, useContext, useReducer } from "react";
 
 type PositionType = "top" | "right" | "bottom" | "left";
 
 // [Top, Right, Bottom, Left]
-const position: Record<
-  PositionType,
-  [number, number, number, number, number, string, string, string]
-> = {
-  top: [-48, 16, 48, 16, 20, "-translate-x-1/2", "-bottom-px", "left-1/2"],
-  right: [16, -48, -16, 48, -20, "-translate-y-1/2", "-left-px", "top-1/2"],
-  bottom: [48, -16, -48, 16, -20, "-translate-x-1/2", "-top-px", "left-1/2"],
-  left: [-16, 48, 16, -112, 20, "translate-y-1/2", "-right-px", "top-1/2"],
-};
+const position: Record<PositionType, [number, number, number, string, string]> =
+  {
+    top: [-48, 16, 20, "-translate-x-1/2", "-bottom-px"],
+    right: [16, 48, -20, "-translate-y-1/2", "-left-px"],
+    bottom: [48, 16, -20, "-translate-x-1/2", "-top-px"],
+    left: [-16, -112, 20, "translate-y-1/2", "-right-px"],
+  };
 
 export type TooltipType = {
   enabled: boolean;
@@ -71,44 +76,46 @@ export const TooltipProvider = ({
               <motion.div
                 initial={{
                   opacity: 0,
-                  [axis[item.position]]: position[item.position][4],
+                  [axis[item.position]]: position[item.position][2],
                   scale: 0.6,
                 }}
-                animate={{
-                  opacity: 1,
-                  [axis[item.position]]: 0,
-                  scale: 1,
-                }}
-                transition={{
-                  type: "spring",
-                  stiffness: 750,
-                  damping: 15,
-                }}
+                animate={
+                  {
+                    opacity: 1,
+                    [axis[item.position]]: 0,
+                    scale: 1,
+                    transition: {
+                      type: "spring",
+                      stiffness: 260,
+                      damping: 10,
+                    },
+                  } as TargetAndTransition
+                }
                 exit={{
                   opacity: 0,
-                  [axis[item.position]]: position[item.position][4],
+                  [axis[item.position]]: position[item.position][2],
                   scale: 0.6,
                 }}
                 className={clsx(
                   "fixed z-50 flex flex-col items-center justify-center rounded-md bg-gray-800/50 backdrop-blur-xl px-4 py-2 text-xs shadow-xl",
-                  position[item.position][5]
+                  position[item.position][3]
                 )}
                 style={{
-                  left: item.left + position[item.position][3],
+                  left: item.left + position[item.position][1],
                   top: item.top + position[item.position][0],
                 }}
               >
                 <div
                   className={clsx(
                     "absolute z-30 from-transparent via-emerald-500 to-transparent",
-                    axis[item.position] === "x" ? " inset-x-10" : "inset-y-10",
+                    axis[item.position] === "x" ? "inset-x-10" : "inset-y-10",
                     axis[item.position] === "x"
                       ? "bg-gradient-to-t"
                       : "bg-gradient-to-l",
-                    position[item.position][6],
+                    position[item.position][4],
                     axis[item.position] === "x"
                       ? "w-px h-[20%]"
-                      : "h-px w-[20%] "
+                      : "h-px w-[20%]"
                   )}
                 />
                 <div
@@ -117,10 +124,10 @@ export const TooltipProvider = ({
                     axis[item.position] === "x"
                       ? "bg-gradient-to-t"
                       : "bg-gradient-to-l",
-                    position[item.position][6],
+                    position[item.position][4],
                     axis[item.position] === "x"
                       ? "w-px h-[40%]"
-                      : "h-px w-[40%] "
+                      : "h-px w-[40%]"
                   )}
                 />
                 <div className="relative z-30 text-xs font-bold text-white text-center">

@@ -10,7 +10,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { onConnections, onDragStart } from "@/lib/editor-utils";
+import {
+  fetchBotSlackChannels,
+  onConnections,
+  onDragStart,
+} from "@/lib/editor-utils";
 import EditorCanvasIconHelper from "./editor-canvas-icon-helper";
 import { Separator } from "@/components/ui/separator";
 import { useConnection } from "@/providers/connection-provider";
@@ -39,6 +43,15 @@ const EditorCanvasSidebar = ({ nodes }: Props) => {
       onConnections(nodeConnection, state, googleFile);
     }
   }, [state]);
+
+  useEffect(() => {
+    if (nodeConnection.slackNode.slackAccessToken) {
+      fetchBotSlackChannels(
+        nodeConnection.slackNode.slackAccessToken,
+        setSlackChannels
+      );
+    }
+  }, [nodeConnection]);
 
   return (
     <aside className="flex-1 overflow-hidden">

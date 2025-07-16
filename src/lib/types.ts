@@ -33,7 +33,6 @@ export type EditorCanvasTypes =
   | "Email"
   | "Condition"
   | "AI"
-  | "Discord"
   | "Slack"
   | "Google Drive"
   | "Notion"

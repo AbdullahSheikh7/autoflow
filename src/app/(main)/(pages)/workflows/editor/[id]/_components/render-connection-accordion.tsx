@@ -28,13 +28,11 @@ const RenderConnectionAccordion = ({ connection, state }: Props) => {
     useAutoflowStore();
 
   const connectionData = (nodeConnection as any)[connectionKey];
-  const isConnected =
+  const isConnected: boolean =
     alwaysTrue ||
     (nodeConnection[connectionKey] &&
       accessTokenKey &&
-      connectionKey === "discordNode" &&
-      accessTokenKey === "webhookUrl" &&
-      connectionData[accessTokenKey]);
+      connectionData[accessTokenKey!]);
 
   return (
     <>
@@ -62,7 +60,7 @@ const RenderConnectionAccordion = ({ connection, state }: Props) => {
                     placeholder="Select channels"
                     emptyIndicator={
                       <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
-                        no results found
+                        No results found
                       </p>
                     }
                   />

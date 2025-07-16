@@ -70,4 +70,50 @@ export const getNotionDatabase = async (
   const notion = new Client({
     auth: accessToken,
   });
+  const response = await notion.databases.retrieve({ database_id: databaseId });
+  return response;
+};
+
+export const onCreateNewPageInDatabase = async (
+  databaseId: string,
+  accessToken: string,
+  content: string
+) => {
+  const notion = new Client({
+    auth: accessToken,
+  });
+  const response = await notion.pages.create({
+    parent: {
+      type: "database_id",
+      database_id: databaseId,
+    },
+    properties: {
+      name: [
+        {
+          text: {
+            content,
+          },
+        },
+      ],
+      // WIP: Add these fieldss
+      // type: [
+      //   {
+      //     text: {
+      //       content: content.type,
+      //     },
+      //   },
+      // ],
+      // kind: [
+      //   {
+      //     text: {
+      //       content: content.kind,
+      //     },
+      //   },
+      // ],
+    },
+  });
+
+  if (response) {
+    return response;
+  }
 };

@@ -11,7 +11,7 @@ type Props = {
   searchParams?: { [key: string]: string | undefined };
 };
 
-const Connections = async (props: Props) => {
+const Connections = async ({ searchParams }: Props) => {
   const {
     webhook_id,
     webhook_name,
@@ -31,7 +31,7 @@ const Connections = async (props: Props) => {
     bot_user_id,
     team_id,
     team_name,
-  } = props.searchParams ?? {
+  } = (await Promise.resolve(searchParams)) ?? {
     webhook_id: "",
     webhook_name: "",
     webhook_url: "",
