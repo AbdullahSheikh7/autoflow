@@ -41,7 +41,7 @@ export const BillingProvider = ({ children }: WithChildProps) => {
     setTier,
   };
 
-  return <Provider value={values}></Provider>;
+  return <Provider value={values}>{children}</Provider>;
 };
 
 export const useBilling = () => {

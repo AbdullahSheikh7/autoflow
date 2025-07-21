@@ -7,16 +7,13 @@ import {
 } from "@uploadcare/react-uploader";
 import "@uploadcare/react-uploader/core.css";
 import { useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
 import "@uploadcare/react-uploader/core.css";
 import { useTheme } from "next-themes";
-import { User } from "@/generated/prisma";
 
 type Props = { onUpload: (cdnUrl: string) => Promise<void> };
 
 const UploadCareButton = ({ onUpload }: Props) => {
   const { theme } = useTheme();
-  const router = useRouter();
   const ctxProviderRef = useRef<InstanceType<UploadCtxProvider>>(null);
 
   useEffect(() => {
@@ -33,7 +30,7 @@ const UploadCareButton = ({ onUpload }: Props) => {
       handleUpload
     );
 
-    () => {
+    return () => {
       ctxProviderRef.current?.removeEventListener(
         "file-upload-success",
         handleUpload

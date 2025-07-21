@@ -38,6 +38,7 @@ export const GET = async () => {
       return NextResponse.json({ message: "No files foudn" }, { status: 200 });
     }
   } catch (error) {
+    console.log(error);
     return NextResponse.json(
       { message: "Something went wrong" },
       { status: 500 }

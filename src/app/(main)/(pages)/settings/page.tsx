@@ -16,9 +16,11 @@ const Settings = () => {
   useEffect(() => {
     (async () => {
       const dbUser = await userFromDB();
-      setUser(dbUser);
-      setIsLoading(false);
-      setImageUrl(dbUser?.profileImage!);
+      if (dbUser) {
+        setUser(dbUser);
+        setIsLoading(false);
+        setImageUrl(dbUser.profileImage!);
+      }
     })();
   }, []);
 

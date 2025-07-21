@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { onContentChange } from "@/lib/editor-utils";
-import { ConnectionTypes, nodeMapper } from "@/lib/types";
+import { nodeMapper } from "@/lib/types";
 import { ConnectionProviderProps } from "@/providers/connection-provider";
 import { EditorState } from "@/providers/editor-provider";
 import { Option } from "@/store";
@@ -29,16 +29,6 @@ type Props = {
   selectedSlackChannels: Option[];
   setSelectedSlackChannels: (selectedSlackChannels: Option[]) => void;
 };
-
-type NodeConnectionType<T> = T extends "Discord"
-  ? ConnectionProviderProps["discordNode"]
-  : T extends "Notion"
-  ? ConnectionProviderProps["notionNode"]
-  : T extends "Slack"
-  ? ConnectionProviderProps["slackNode"]
-  : T extends "Google Drive"
-  ? ConnectionProviderProps["googleNode"]
-  : {};
 
 const ContentBasedOnTitle = ({
   nodeConnection,
@@ -98,8 +88,7 @@ const ContentBasedOnTitle = ({
           </CardHeader>
         )}
         <div className="flex flex-col gap-3 px-6 py-3 pb-20">
-          {/* WIP: Do as directed in the video */}
-          <p>{title === "Notion" ? "Values to be stored" : "Message"}</p>
+          <p>{"Message"}</p>
           <Input
             type="text"
             value={nodeConnectionType.content}

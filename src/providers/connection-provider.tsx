@@ -2,21 +2,21 @@
 
 import { useContext, createContext, useState } from "react";
 
-type DiscordNodeType = {
+export type DiscordNodeType = {
   webhookURL: string;
   content: string;
   webhookName: string;
   guildName: string;
 };
 
-type NotionNodeType = {
+export type NotionNodeType = {
   accessToken: string;
   databaseId: string;
   workspaceName: string;
   content: string;
 };
 
-type SlackNodeType = {
+export type SlackNodeType = {
   appId: string;
   authedUserId: string;
   authedUserToken: string;
@@ -36,7 +36,7 @@ type WorkflowTemplateType = {
 export type ConnectionProviderProps = {
   discordNode: DiscordNodeType;
   setDiscordNode: React.Dispatch<React.SetStateAction<DiscordNodeType>>;
-  googleNode: {}[];
+  googleNode: object[];
   setGoogleNode: React.Dispatch<React.SetStateAction<any>>;
   notionNode: NotionNodeType;
   setNotionNode: React.Dispatch<React.SetStateAction<NotionNodeType>>;

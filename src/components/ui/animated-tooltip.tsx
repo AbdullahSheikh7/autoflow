@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { TooltipItem } from "@/lib/types";
 import Link from "next/link";
 import clsx from "clsx";

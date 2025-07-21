@@ -5,12 +5,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import SubscriptionCard from "./subscription-card";
 import CreditTracker from "./credit-tracker";
+import Stripe from "stripe";
 
-type Props = {};
-
-const BillingDashboard = (props: Props) => {
+const BillingDashboard = () => {
   const { credits, tier } = useBilling();
-  const [stripeProducts, setStripeProducts] = useState<any>([]);
+  const [stripeProducts, setStripeProducts] = useState<Stripe.Price[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   const onStripeProducts = async () => {

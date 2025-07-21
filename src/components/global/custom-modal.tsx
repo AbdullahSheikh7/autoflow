@@ -20,8 +20,9 @@ type Props = {
 const CustomModal = ({ title, subheading, children, defaultOpen }: Props) => {
   const { setClose, isOpen } = useModal();
   const handleClose = () => setClose();
+
   return (
-    <Drawer open={isOpen} onClose={handleClose}>
+    <Drawer open={isOpen || defaultOpen} onClose={handleClose}>
       <DrawerContent>
         <DrawerHeader>
           <DrawerTitle className="text-center">{title}</DrawerTitle>

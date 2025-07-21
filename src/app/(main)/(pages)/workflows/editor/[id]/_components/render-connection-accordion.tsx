@@ -2,7 +2,7 @@
 
 import ConnectionCard from "@/app/(main)/(pages)/connections/_components/connection-card";
 import MultipleSelector from "@/components/ui/multiple-selector";
-import { Connection } from "@/lib/types";
+import { Connection, ConnectionTypes } from "@/lib/types";
 import { useConnection } from "@/providers/connection-provider";
 import { EditorState } from "@/providers/editor-provider";
 import { useAutoflowStore } from "@/store";
@@ -34,6 +34,10 @@ const RenderConnectionAccordion = ({ connection, state }: Props) => {
       accessTokenKey &&
       connectionData[accessTokenKey!]);
 
+  const connected: Record<ConnectionTypes, boolean> = {
+    [title]: isConnected,
+  };
+
   return (
     <>
       {state.editor.selectedNode.data.title === title && (
@@ -43,7 +47,7 @@ const RenderConnectionAccordion = ({ connection, state }: Props) => {
             icon={image}
             description={description}
             type={title}
-            connected={{ [title]: isConnected }}
+            connected={connected}
           />
           {slackSpecial && isConnected && (
             <div className="p-6">

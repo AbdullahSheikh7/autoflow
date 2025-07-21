@@ -1,6 +1,11 @@
 import { postContentToWebhook } from "@/app/(main)/(pages)/connections/_actions/discord-connetion";
 import { Button } from "@/components/ui/button";
-import { ConnectionProviderProps } from "@/providers/connection-provider";
+import {
+  ConnectionProviderProps,
+  DiscordNodeType,
+  NotionNodeType,
+  SlackNodeType,
+} from "@/providers/connection-provider";
 import { Option } from "@/store";
 import { usePathname } from "next/navigation";
 import React, { useCallback } from "react";
@@ -31,7 +36,10 @@ const ActionButton = ({
     );
 
     if (response.message === "success") {
-      nodeConnection.setDiscordNode((prev: any) => ({ ...prev, content: "" }));
+      nodeConnection.setDiscordNode((prev: DiscordNodeType) => ({
+        ...prev,
+        content: "",
+      }));
     }
   }, [nodeConnection.discordNode]);
 
@@ -86,7 +94,7 @@ const ActionButton = ({
     );
 
     if (response) {
-      nodeConnection.setNotionNode((prev: any) => ({
+      nodeConnection.setNotionNode((prev: NotionNodeType) => ({
         ...prev,
         content: "",
       }));
@@ -102,7 +110,7 @@ const ActionButton = ({
 
     if (response.message === "success") {
       toast.success("Message sent successfully");
-      nodeConnection.setSlackNode((prev: any) => ({
+      nodeConnection.setSlackNode((prev: SlackNodeType) => ({
         ...prev,
         content: "",
       }));

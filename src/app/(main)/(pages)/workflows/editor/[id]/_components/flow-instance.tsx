@@ -8,6 +8,7 @@ import {
   onFlowPublish,
 } from "../_actions/workflow-connections";
 import { useConnection } from "@/providers/connection-provider";
+import { EditorCanvasTypes } from "@/lib/types";
 
 type Props = {
   id: string;
@@ -17,7 +18,7 @@ type Props = {
 };
 
 const FlowInstance = ({ id, children, edges, nodes }: Props) => {
-  const [isFlow, setIsFlow] = useState([]);
+  const [isFlow, setIsFlow] = useState<EditorCanvasTypes[]>([]);
   const { nodeConnection } = useConnection();
 
   const onFlowAutomation = useCallback(async () => {
@@ -38,9 +39,8 @@ const FlowInstance = ({ id, children, edges, nodes }: Props) => {
   }, []);
 
   const onAutomateFlow = async () => {
-    const flows: any = [];
+    const flows: EditorCanvasTypes[] = [];
     const connectedEdges = edges.map((edge) => edge.target);
-    console.log(edges, nodes);
     connectedEdges.map((target) => {
       nodes.forEach((node) => {
         if (node.id === target) {

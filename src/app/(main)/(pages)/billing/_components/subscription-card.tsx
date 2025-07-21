@@ -8,11 +8,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Stripe } from "stripe";
 
 type Props = {
   onPayment: (id: string) => void;
   tier: string;
-  products: any[];
+  products: Stripe.Price[];
 };
 
 const SubscriptionCard = ({ onPayment, products, tier }: Props) => {
@@ -20,7 +21,7 @@ const SubscriptionCard = ({ onPayment, products, tier }: Props) => {
     <>
       <section className="flex w-full justify-center md:flex-row flex-col gap-6">
         {products &&
-          products.map((product: any) => (
+          products.map((product: Stripe.Price) => (
             <Card className="p-3" key={product.id}>
               <CardHeader>
                 <CardTitle>{product.nickname}</CardTitle>

@@ -1,4 +1,4 @@
-import { UserButton, useAuth } from "@clerk/nextjs";
+import { UserButton } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";
 import { MenuIcon } from "lucide-react";
 import Image from "next/image";

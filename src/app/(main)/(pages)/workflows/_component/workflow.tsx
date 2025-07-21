@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { MouseEvent } from "react";
 import { toast } from "sonner";
 import { onFlowPublish } from "../editor/[id]/_actions/workflow-connections";
 
@@ -22,10 +22,10 @@ type Props = {
 };
 
 const Workflow = ({ name, description, id, publish }: Props) => {
-  const onPublishFlow = async (event: any) => {
+  const onPublishFlow = async (event: MouseEvent<HTMLButtonElement>) => {
     const response = await onFlowPublish(
       id,
-      event.target.ariaChecked === "false"
+      event.currentTarget.ariaChecked === "false"
     );
     if (response) toast.message(response);
   };

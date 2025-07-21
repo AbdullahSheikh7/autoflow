@@ -4,9 +4,9 @@ import { postMessageToSlack } from "@/app/(main)/(pages)/connections/_actions/sl
 import { db } from "@/lib/db";
 import axios from "axios";
 import { headers } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export const POST = async (req: NextRequest) => {
+export const POST = async () => {
   const headersList = await headers();
 
   let channelResourceId;

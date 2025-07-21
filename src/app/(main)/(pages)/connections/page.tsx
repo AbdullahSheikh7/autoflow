@@ -6,6 +6,7 @@ import { onDiscordConnect } from "./_actions/discord-connetion";
 import { onNotionConnect } from "./_actions/notion-connetion";
 import { onSlackConnect } from "./_actions/slack-connetion";
 import { getUserData } from "./_actions/get-user";
+import { ConnectionTypes } from "@/lib/types";
 
 type Props = {
   searchParams?: { [key: string]: string | undefined };
@@ -84,13 +85,18 @@ const Connections = async ({ searchParams }: Props) => {
       user.id
     );
 
-    const connections: any = {};
+    const connections: Record<ConnectionTypes, boolean> = {
+      Discord: false,
+      Notion: false,
+      Slack: false,
+      "Google Drive": false,
+    };
 
     const user_info = await getUserData(user.id);
 
     user_info?.connections.map((connection) => {
-      connections[connection.type] = true;
-      return (connections[connection.type] = true);
+      connections[connection.type as ConnectionTypes] = true;
+      return (connections[connection.type as ConnectionTypes] = true);
     });
 
     return { ...connections, "Google Drive": true };

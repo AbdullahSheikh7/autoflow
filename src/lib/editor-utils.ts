@@ -1,6 +1,11 @@
 import { DragEvent } from "react";
 import { EditorCanvasTypes } from "./types";
-import { ConnectionProviderProps } from "@/providers/connection-provider";
+import {
+  ConnectionProviderProps,
+  DiscordNodeType,
+  NotionNodeType,
+  SlackNodeType,
+} from "@/providers/connection-provider";
 import { EditorState } from "@/providers/editor-provider";
 import { getDiscordConnectionUrl } from "@/app/(main)/(pages)/connections/_actions/discord-connetion";
 import {
@@ -27,7 +32,7 @@ const onSlackContent = (
   nodeConnection: ConnectionProviderProps,
   event: React.ChangeEvent<HTMLInputElement>
 ) => {
-  nodeConnection.setSlackNode((prev: any) => ({
+  nodeConnection.setSlackNode((prev: SlackNodeType) => ({
     ...prev,
     content: event.target.value,
   }));
@@ -37,7 +42,7 @@ const onDiscordContent = (
   nodeConnection: ConnectionProviderProps,
   event: React.ChangeEvent<HTMLInputElement>
 ) => {
-  nodeConnection.setDiscordNode((prev: any) => ({
+  nodeConnection.setDiscordNode((prev: DiscordNodeType) => ({
     ...prev,
     content: event.target.value,
   }));
@@ -47,7 +52,7 @@ const onNotionContent = (
   nodeConnection: ConnectionProviderProps,
   event: React.ChangeEvent<HTMLInputElement>
 ) => {
-  nodeConnection.setNotionNode((prev: any) => ({
+  nodeConnection.setNotionNode((prev: NotionNodeType) => ({
     ...prev,
     content: event.target.value,
   }));
@@ -71,7 +76,7 @@ const onAddTemplateSlack = (
   nodeConnection: ConnectionProviderProps,
   template: string
 ) => {
-  nodeConnection.setSlackNode((prev: any) => ({
+  nodeConnection.setSlackNode((prev: SlackNodeType) => ({
     ...prev,
     content: `${prev.content} ${template}`,
   }));
@@ -81,7 +86,17 @@ const onAddTemplateDiscord = (
   nodeConnection: ConnectionProviderProps,
   template: string
 ) => {
-  nodeConnection.setDiscordNode((prev: any) => ({
+  nodeConnection.setDiscordNode((prev: DiscordNodeType) => ({
+    ...prev,
+    content: `${prev.content} ${template}`,
+  }));
+};
+
+const onAddTemplateNotion = (
+  nodeConnection: ConnectionProviderProps,
+  template: string
+) => {
+  nodeConnection.setNotionNode((prev: NotionNodeType) => ({
     ...prev,
     content: `${prev.content} ${template}`,
   }));
@@ -96,6 +111,8 @@ export const onAddTemplate = (
     onAddTemplateSlack(nodeConnection, template);
   } else if (title === "Discord") {
     onAddTemplateDiscord(nodeConnection, template);
+  } else if (title === "Notion") {
+    onAddTemplateNotion(nodeConnection, template);
   }
 };
 
