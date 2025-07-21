@@ -5,11 +5,11 @@ import React from "react";
 import BillingDashboard from "./_components/billing-dashboard";
 
 type Props = {
-  searchParams?: { [key: string]: string | undefined };
+  searchParams?: Promise<{ [key: string]: string | undefined }>;
 };
 
 const Billing = async ({ searchParams }: Props) => {
-  const { session_id } = (await Promise.resolve(searchParams)) ?? {
+  const { session_id } = (await searchParams) ?? {
     session_id: "",
   };
 

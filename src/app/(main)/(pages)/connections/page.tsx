@@ -9,7 +9,7 @@ import { getUserData } from "./_actions/get-user";
 import { ConnectionTypes } from "@/lib/types";
 
 type Props = {
-  searchParams?: { [key: string]: string | undefined };
+  searchParams?: Promise<{ [key: string]: string | undefined }>;
 };
 
 const Connections = async ({ searchParams }: Props) => {
@@ -32,7 +32,7 @@ const Connections = async ({ searchParams }: Props) => {
     bot_user_id,
     team_id,
     team_name,
-  } = (await Promise.resolve(searchParams)) ?? {
+  } = (await searchParams) ?? {
     webhook_id: "",
     webhook_name: "",
     webhook_url: "",
