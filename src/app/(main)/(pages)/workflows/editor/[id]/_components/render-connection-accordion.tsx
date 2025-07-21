@@ -35,6 +35,10 @@ const RenderConnectionAccordion = ({ connection, state }: Props) => {
       connectionData[accessTokenKey!]);
 
   const connected: Record<ConnectionTypes, boolean> = {
+    "Google Drive": false,
+    Notion: false,
+    Slack: false,
+    Discord: false,
     [title]: isConnected,
   };
 
