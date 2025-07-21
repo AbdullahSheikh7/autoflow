@@ -7,7 +7,6 @@ import {
 import { ConnectionTypes } from "@/lib/types";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect } from "react";
 
 type Props = {
   type: ConnectionTypes;
@@ -26,9 +25,7 @@ const ConnectionCard = ({
   type,
   callback,
 }: Props) => {
-  useEffect(() => {
-    if (callback) callback();
-  }, []);
+  if (callback) callback();
 
   return (
     <Card className="flex flex-row w-full items-center justify-between">
