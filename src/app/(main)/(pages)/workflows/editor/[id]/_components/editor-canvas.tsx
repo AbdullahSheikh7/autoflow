@@ -2,7 +2,6 @@
 
 import { EditorCanvasTypes, EditorNodeType } from "@/lib/types";
 import { Editor, useEditor } from "@/providers/editor-provider";
-// WIP: Try removing this
 import "@xyflow/react/dist/style.css";
 import { DragEvent, useCallback, useEffect, useMemo, useState } from "react";
 import EditorCanvasCardSingle from "./editor-canvas-card-single";

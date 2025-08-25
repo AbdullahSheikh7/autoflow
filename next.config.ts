@@ -1,7 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  allowedDevOrigins: [process.env.NGROK_URI!],
   images: {
     remotePatterns: [
       {
