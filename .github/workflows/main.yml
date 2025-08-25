@@ -17,3 +17,5 @@ jobs:
 
       - run: bun install
       - run: bun run build
+        env:
+          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
