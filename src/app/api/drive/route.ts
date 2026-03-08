@@ -12,7 +12,7 @@ export const GET = async (request: Request) => {
   const { userId } = await auth();
 
   if (!userId) {
-    return { message: "User not found" };
+    return NextResponse.json({ message: "User not found" });
   }
 
   const clerkResponse = await (
