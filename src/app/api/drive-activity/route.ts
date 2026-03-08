@@ -8,7 +8,7 @@ export const GET = async () => {
   const oauth2Client = new google.auth.OAuth2(
     process.env.GOOGLE_CLIENT_ID,
     process.env.GOOGLE_CLIENT_SECRET,
-    process.env.OAUTH2_REDIRECT_URI
+    process.env.OAUTH2_REDIRECT_URI,
   );
 
   const { userId } = await auth();
@@ -45,7 +45,7 @@ export const GET = async () => {
     requestBody: {
       id: channelId,
       type: "webhook",
-      address: `${process.env.NGROK_URI}/api/drive-activity/notification`,
+      address: `${process.env.NEXT_ENVIRONMENT === "development" ? process.env.NGROK_URI : process.env.NEXT_PUBLIC_URL}/api/drive-activity/notification`,
       kind: "api#channel",
     },
   });

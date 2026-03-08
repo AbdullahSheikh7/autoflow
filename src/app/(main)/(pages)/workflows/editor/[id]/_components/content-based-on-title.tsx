@@ -43,9 +43,8 @@ const ContentBasedOnTitle = ({
 
   useEffect(() => {
     const reqGoogle = async () => {
-      const response: { data: { message: { files: any } } } = await axios.get(
-        "/api/drive"
-      );
+      const response: { data: { message: { files: any } } } =
+        await axios.get("/api/drive");
 
       if (response) {
         toast.message(JSON.stringify(response.data.message.files[0]));
@@ -71,10 +70,10 @@ const ContentBasedOnTitle = ({
             title === "Slack"
               ? "slackAccessToken"
               : title === "Discord"
-              ? "webhookUrl"
-              : title === "Notion"
-              ? "accessToken"
-              : ""
+                ? "webhookUrl"
+                : title === "Notion"
+                  ? "accessToken"
+                  : ""
           }`
         ];
 
