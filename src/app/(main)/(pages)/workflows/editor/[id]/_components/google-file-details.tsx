@@ -21,6 +21,7 @@ const GoogleFileDetails = ({ nodeConnection, title, gFile }: Props) => {
   if (title === "Google Drive") {
     details.push("id");
   }
+
   return (
     <div className="flex flex-wrap gap-2">
       <Card className="flex-row">
@@ -29,13 +30,13 @@ const GoogleFileDetails = ({ nodeConnection, title, gFile }: Props) => {
             <div
               key={details}
               onClick={() =>
-                onAddTemplate(nodeConnection, title, gFile[details])
+                onAddTemplate(nodeConnection, title, gFile.files[0][details])
               }
               className="flex cursor-pointer gap-2 rounded-full bg-white px-3 py-1 text-gray-500"
             >
               {details}:{" "}
               <CardDescription className="text-black">
-                {gFile[details]}
+                {gFile.files[0][details]}
               </CardDescription>
             </div>
           ))}

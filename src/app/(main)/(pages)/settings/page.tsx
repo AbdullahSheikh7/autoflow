@@ -20,7 +20,6 @@ const Settings = () => {
         setUser(dbUser);
         setIsLoading(false);
         setImageUrl(dbUser.profileImage!);
-        console.log(dbUser.profileImage);
       }
     })();
   }, []);

@@ -32,13 +32,12 @@ const ActionButton = ({
   const onSendDiscordMessage = useCallback(async () => {
     const response = await postContentToWebhook(
       nodeConnection.discordNode.content,
-      nodeConnection.discordNode.webhookURL
+      nodeConnection.discordNode.webhookURL,
     );
 
     if (response.message === "success") {
       nodeConnection.setDiscordNode((prev: DiscordNodeType) => ({
         ...prev,
-        content: "",
       }));
     }
   }, [nodeConnection.discordNode]);
@@ -48,7 +47,7 @@ const ActionButton = ({
       const response = await onCreateNodeTemplate(
         nodeConnection.discordNode.content,
         currentService,
-        path.split("/").pop()!
+        path.split("/").pop()!,
       );
 
       if (response) {
@@ -62,7 +61,7 @@ const ActionButton = ({
         currentService,
         path.split("/").pop()!,
         channels,
-        nodeConnection.slackNode.slackAccessToken
+        nodeConnection.slackNode.slackAccessToken,
       );
 
       if (response) {
@@ -77,7 +76,7 @@ const ActionButton = ({
         path.split("/").pop()!,
         channels,
         undefined,
-        nodeConnection.notionNode.databaseId
+        nodeConnection.notionNode.databaseId,
       );
 
       if (response) {
@@ -90,7 +89,7 @@ const ActionButton = ({
     const response = await onCreateNewPageInDatabase(
       nodeConnection.notionNode.databaseId,
       nodeConnection.notionNode.accessToken,
-      nodeConnection.notionNode.content
+      nodeConnection.notionNode.content,
     );
 
     if (response) {
@@ -105,7 +104,7 @@ const ActionButton = ({
     const response = await postMessageToSlack(
       nodeConnection.slackNode.slackAccessToken,
       channels,
-      nodeConnection.slackNode.content
+      nodeConnection.slackNode.content,
     );
 
     if (response.message === "success") {

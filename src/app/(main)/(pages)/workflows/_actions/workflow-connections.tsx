@@ -27,7 +27,7 @@ export const onCreateNodeTemplate = async (
   workflowId: string,
   channels?: Option[],
   accessToken?: string,
-  notionDbId?: string
+  notionDbId?: string,
 ) => {
   if (type === "Discord") {
     const response = await db.workflows.update({
@@ -67,7 +67,7 @@ export const onCreateNodeTemplate = async (
 
       if (channelList) {
         const nonDuplicated = channelList.slackChannels.filter(
-          (channel) => channel !== channels![0].value
+          (channel) => channel !== channels![0].value,
         );
 
         nonDuplicated!
@@ -161,6 +161,7 @@ export const onGetNodeEdges = async (flowId: string) => {
     select: {
       nodes: true,
       edges: true,
+      discordTemplate: true,
     },
   });
 

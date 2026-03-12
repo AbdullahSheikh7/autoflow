@@ -20,7 +20,7 @@ import { Option } from "@/store";
 
 export const onDragStart = (
   event: DragEvent<HTMLDivElement>,
-  nodeType: EditorCanvasTypes
+  nodeType: EditorCanvasTypes,
 ) => {
   if (event.dataTransfer) {
     event.dataTransfer.setData("application/reactflow", nodeType);
@@ -30,7 +30,7 @@ export const onDragStart = (
 
 const onSlackContent = (
   nodeConnection: ConnectionProviderProps,
-  event: React.ChangeEvent<HTMLInputElement>
+  event: React.ChangeEvent<HTMLInputElement>,
 ) => {
   nodeConnection.setSlackNode((prev: SlackNodeType) => ({
     ...prev,
@@ -40,7 +40,7 @@ const onSlackContent = (
 
 const onDiscordContent = (
   nodeConnection: ConnectionProviderProps,
-  event: React.ChangeEvent<HTMLInputElement>
+  event: React.ChangeEvent<HTMLInputElement>,
 ) => {
   nodeConnection.setDiscordNode((prev: DiscordNodeType) => ({
     ...prev,
@@ -50,7 +50,7 @@ const onDiscordContent = (
 
 const onNotionContent = (
   nodeConnection: ConnectionProviderProps,
-  event: React.ChangeEvent<HTMLInputElement>
+  event: React.ChangeEvent<HTMLInputElement>,
 ) => {
   nodeConnection.setNotionNode((prev: NotionNodeType) => ({
     ...prev,
@@ -61,7 +61,7 @@ const onNotionContent = (
 export const onContentChange = (
   nodeConnection: ConnectionProviderProps,
   nodeType: string,
-  event: React.ChangeEvent<HTMLInputElement>
+  event: React.ChangeEvent<HTMLInputElement>,
 ) => {
   if (nodeType === "Slack") {
     onSlackContent(nodeConnection, event);
@@ -74,7 +74,7 @@ export const onContentChange = (
 
 const onAddTemplateSlack = (
   nodeConnection: ConnectionProviderProps,
-  template: string
+  template: string,
 ) => {
   nodeConnection.setSlackNode((prev: SlackNodeType) => ({
     ...prev,
@@ -84,7 +84,7 @@ const onAddTemplateSlack = (
 
 const onAddTemplateDiscord = (
   nodeConnection: ConnectionProviderProps,
-  template: string
+  template: string,
 ) => {
   nodeConnection.setDiscordNode((prev: DiscordNodeType) => ({
     ...prev,
@@ -94,7 +94,7 @@ const onAddTemplateDiscord = (
 
 const onAddTemplateNotion = (
   nodeConnection: ConnectionProviderProps,
-  template: string
+  template: string,
 ) => {
   nodeConnection.setNotionNode((prev: NotionNodeType) => ({
     ...prev,
@@ -105,7 +105,7 @@ const onAddTemplateNotion = (
 export const onAddTemplate = (
   nodeConnection: ConnectionProviderProps,
   title: string,
-  template: string
+  template: string,
 ) => {
   if (title === "Slack") {
     onAddTemplateSlack(nodeConnection, template);
@@ -119,10 +119,11 @@ export const onAddTemplate = (
 export const onConnections = async (
   nodeConnection: ConnectionProviderProps,
   editorState: EditorState,
-  googleFile: any
+  googleFile: any,
 ) => {
   if (editorState.editor.selectedNode.data.title === "Discord") {
     const connection = await getDiscordConnectionUrl();
+    console.log(connection);
     if (connection) {
       nodeConnection.setDiscordNode({
         webhookURL: connection.url,
@@ -146,7 +147,7 @@ export const onConnections = async (
       if (nodeConnection.notionNode.databaseId !== "") {
         const response = await getNotionDatabase(
           nodeConnection.notionNode.databaseId,
-          nodeConnection.notionNode.accessToken
+          nodeConnection.notionNode.accessToken,
         );
       }
     }
@@ -171,7 +172,7 @@ export const onConnections = async (
 
 export const fetchBotSlackChannels = async (
   token: string,
-  setSlackChannels: (slackChannels: Option[]) => void
+  setSlackChannels: (slackChannels: Option[]) => void,
 ) => {
   await listBotChannels(token)?.then((channels) => setSlackChannels(channels));
 };

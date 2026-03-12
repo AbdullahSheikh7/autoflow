@@ -32,6 +32,10 @@ import FlowInstance from "./flow-instance";
 import EditorCanvasSidebar from "./editor-canvas-sidebar";
 import { useTheme } from "next-themes";
 import { onGetNodeEdges } from "../../../_actions/workflow-connections";
+import {
+  DiscordNodeType,
+  useConnection,
+} from "@/providers/connection-provider";
 
 type Props = { id: string };
 
@@ -49,13 +53,14 @@ const EditorCanvas = ({ id }: Props) => {
   const [nodes, setNodes] = useState(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
   const [isWorkflowLoading, setIsWorkflowLoading] = useState<boolean>(false);
+  const { nodeConnection } = useConnection();
 
   const onDrop = useCallback(
     (event: DragEvent) => {
       event.preventDefault();
 
       const type: EditorCanvasTypes = event.dataTransfer?.getData(
-        "application/reactflow"
+        "application/reactflow",
       ) as EditorCanvasTypes;
 
       if (typeof type === "undefined" || !type) {
@@ -63,7 +68,7 @@ const EditorCanvas = ({ id }: Props) => {
       }
 
       const triggerAlreadyExists = state.editor.elements.find(
-        (item) => item.type === "Trigger"
+        (item) => item.type === "Trigger",
       );
 
       if (type === "Trigger" && triggerAlreadyExists) {
@@ -94,7 +99,7 @@ const EditorCanvas = ({ id }: Props) => {
 
       setNodes((nodes) => nodes.concat(newNode));
     },
-    [reactFlowInstance, state]
+    [reactFlowInstance, state],
   );
 
   const onDragOver = useCallback((event: DragEvent) => {
@@ -106,14 +111,14 @@ const EditorCanvas = ({ id }: Props) => {
     (changes: NodeChange[]) => {
       setNodes((nodes) => applyNodeChanges(changes, nodes) as EditorNodeType[]);
     },
-    [nodes]
+    [nodes],
   );
 
   const onEdgesChange = useCallback(
     (changes: EdgeChange[]) => {
       setEdges((edges) => applyEdgeChanges(changes, edges));
     },
-    [edges]
+    [edges],
   );
 
   const onConnect = useCallback((params: Edge | Connection) => {
@@ -159,7 +164,7 @@ const EditorCanvas = ({ id }: Props) => {
       Action: EditorCanvasCardSingle,
       Wait: EditorCanvasCardSingle,
     }),
-    []
+    [],
   );
 
   useEffect(() => {
@@ -179,6 +184,11 @@ const EditorCanvas = ({ id }: Props) => {
       setEdges(JSON.parse(response.edges!));
       setNodes(JSON.parse(response.nodes!));
       setIsWorkflowLoading(false);
+      // WIP: Need to complete these for slack and notion
+      nodeConnection.setDiscordNode((prev: DiscordNodeType) => ({
+        ...prev,
+        content: response.discordTemplate || "",
+      }));
     }
     setIsWorkflowLoading(false);
   };

@@ -24,7 +24,6 @@ const WorkflowButton = ({ title }: Props) => {
       </CustomModal>,
     );
   };
-  console.log(credits);
   return (
     <Button
       size={title ? "default" : "icon"}

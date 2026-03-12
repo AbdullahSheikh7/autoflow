@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { getGoogleListener } from "../../../_actions/workflow-connections";
@@ -22,6 +24,8 @@ const GoogleDriveFiles = () => {
 
   const onListener = async () => {
     const listener = await getGoogleListener();
+    console.log(listener);
+
     if (listener?.googleResourceId !== null) {
       setIsListening(true);
     }
