@@ -1,0 +1,5 @@
+const TermsOfCondition = () => {
+  return <div>TermsOfCondition</div>;
+};
+
+export default TermsOfCondition;
